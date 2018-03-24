@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Practical Functional Java</title>
+<link rel="stylesheet" href="reveal.js-3.6.0/css/reveal.css">
+<link rel="stylesheet" href="reveal.js-3.6.0/css/theme/moon.css">
+<link rel="stylesheet" href="reveal.js-3.6.0/lib/css/obsidian.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section>
+        <h2>Practical Functional Kotlin</h2>
+        <h3>Workshop Overview</h3>
+        <h4>Jeff Butler</h4>
+        <p>https://github.com/jeffgbutler/practical-functional-kotlin</p>
+        <p>https://jeffgbutler.github.io/practical-functional-kotlin/</p>
+      </section>
+
+      <section>
+        <h2>About Me</h2>
+        <ul>
+          <li>Enterprise Architect for DMI in Indianapolis</li>
+          <li>Committer to Apache iBatis/MyBatis since 2005</li>
+          <li>Creator of MyBatis Generator and MyBatis Dynamic SQL</li>
+          <li>Voracious reader, adventurous eater, lawn care enthusiast</li>
+          <li>Desert Island disks include White Stripes, Beck, Nirvana, Jimmie Dale Gilmore, Marty Stuart</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>How this Workshop Came to Be</h2>
+        <ul>
+          <li>I spent a while learning and playing with Clojure, but it wasn't practical</li>
+          <li>Java 8!</li>
+          <li>SpringOne Platform Conference</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h2>Plan for the Workshop</h2>
+        <ul>
+          <li>Kotlin Overview</li>
+          <li>Multi-step guided exercise - Green Field</li>
+        </ul>
+        <p/>
+      </section>
+
+      <section>
+        <h2>Next Steps</h2>
+        <ul>
+          <li>Demo and overview of the source repo</li>
+          <li>Setup Exercise: Make sure you can run the tests in whatever IDE you choose</li>
+        </ul>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="reveal.js-3.6.0/lib/js/head.min.js"></script>
+  <script src="reveal.js-3.6.0/js/reveal.js"></script>
+  <script>
+    Reveal.initialize({
+        slideNumber: 'c/t',
+        dependencies: [
+            // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
+            { src: 'reveal.js-3.6.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+
+            // Syntax highlight for <code> elements
+            { src: 'reveal.js-3.6.0/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+
+            // Zoom in and out with Alt+click
+            { src: 'reveal.js-3.6.0/plugin/zoom-js/zoom.js', async: true },
+
+            // Speaker notes
+            { src: 'reveal.js-3.6.0/plugin/notes/notes.js', async: true }
+        ]
+    });
+  </script>
+</body>
+</html>
