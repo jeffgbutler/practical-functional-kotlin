@@ -48,6 +48,6 @@ If you experience difficulties in building the project, it might be that your wo
 9. Specify the location of the Maven executable:
    - ctrl-shift-P (show all commands)
    - Open Workplace settings
-   - Add setting "maven.executable.path": "<maven location>" (for example "C:\\\\JavaTools\\\\apache-maven-3.5.3\\\\bin\\\\mvn.cmd")
+   - Add setting "maven.executable.path": "\<maven location\>" (for example "C:\\\\JavaTools\\\\apache-maven-3.5.3\\\\bin\\\\mvn.cmd")
    - Reload the window (ctrl-shift-P, then "Reload Window")
 10. You can run the tests by selecting the project in the "Maven Projects" panel, then right clicking and selecting "test"
