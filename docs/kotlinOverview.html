@@ -354,7 +354,7 @@
       }
   }
 
-  var myDog = Dog("Bob Barker", 22)
+  var myDog = Dog("Bob Barker", 22)  // no new keyword!
   var talk = speak(myDog)   // Bark
           </code>
         </pre>
@@ -420,9 +420,10 @@
 
   val bobString1 = "My name is ${bob.name}, my home address is ${bob.homeAddress.line1}"
 
+  // triple quoted string - preserves formatting
   val bobString2 = """|My name is "${bob.name}"
                       |  My home address is ${bob.homeAddress.line1}"""
-                   .trimMargin("|")   // "|" is default
+                   .trimMargin("|")   // "|" is default and can be omitted
           </code>
         </pre>
       </section>
