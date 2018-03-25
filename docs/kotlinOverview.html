@@ -10,12 +10,17 @@
   
   <div class="reveal">
     <div class="slides">
+
       <section>
         <h2>Practical Functional Kotlin</h2>
         <h3>Kotlin Overview</h3>
         <h4>Jeff Butler</h4>
         <p>https://github.com/jeffgbutler/practical-functional-kotlin</p>
         <p>https://jeffgbutler.github.io/practical-functional-kotlin/</p>
+      </section>
+
+      <!-- Code PaLOUsa 2018 Sponsor Slide -->
+      <section data-background-color="#ffffff" data-background-image="https://codepalousa.blob.core.windows.net/images/CPL18%20-%20Sponsor%20Slide.png">
       </section>
 
       <section>
@@ -41,8 +46,8 @@
         <ul>
           <li>The JVM runs on virtually every platform - from your credit card to the largest mainframe</li>
           <li>Cross platform compatibility has been a hallmark of Java from the very beginning</li>
-          <li>Sun, Oracle, and IBM have invested heavily to ensure a highly stable and performant runtime</li>
-          <li>Virtually all large systems are written in Java</li>
+          <li>Huge investment in a highly stable and performant runtime</li>
+          <li>Many important and large systems are written in Java</li>
           <li>The open source movement flourished with Java</li>
           <li>Many important architectural concepts in use today have come from the Java/Open Source space</li>
         </ul>
@@ -52,7 +57,7 @@
         <h3>What's Wrong with Java?</h3>
         <ul>
           <li>Many Java code bases are unmitigated disasters</li>
-          <li>Many Java "developers" are undisciplined hacks</li>
+          <li>Many Java developers are undisciplined hacks</li>
           <li>Enterprise systems - EJBs, WebSphere, etc.</li>
           <li>The Java language suffered from years of inattention</li>
           <li>Java 8 is great, but very late and many clients have not upgraded</li>
@@ -84,10 +89,10 @@
         <ul>
           <li>Groovy (Dynamic) - Pivotal donated to Apache where projects go to die</li>
           <li>Clojure (Lisp on JVM)</li>
-          <li>Scala (static types, functional, weird)</li>
+          <li>Scala (static types, functional, ML on the JVM)</li>
           <li>Dozens more</li>
         </ul>
-        <p>Virtually none of these have gained significant and lasting traction</p>
+        <p>¯\_(ツ)_/¯</p>
       </section>
       
       <section>
@@ -142,7 +147,7 @@
           <li>Semicolons are optional and discouraged</li>
           <li>Multiple classes in files</li>
           <li>Very relaxed about classes, file names, etc.</li>
-          <li>Codifies Many Conventions leading to more concise code</li>
+          <li>Codifies many conventions leading to more concise code</li>
           <li>Type inference</li>
           <li>Lambdas before Java 8</li>
           <li>Null Safety</li>
@@ -176,7 +181,7 @@
         println(s)
     }
 
-    fun helloWorld2(s: String) = println(s)
+    fun helloWorld2(s: String) = println(s)  // one line functions don't need braces
 
     fun add1(a: Int, b: Int): Int {
         return a + b
@@ -189,25 +194,65 @@
       </section>
       
       <section>
-        <h3>Classes</h3>
+        <h3>Simple Classes</h3>
         <pre>
           <code class="kotlin">
-            TODO
+    class MyCalculator1 (val firstName: String, val lastName: String) {
+        fun getFullName() = firstName + " " + lastName  // don't do this!
+    }
           </code>
         </pre>
-        <p>Functions do not need to be in a class!</p>
+        <p align="left">Notes:</p>
+        <ul style="font-size: smaller">
+          <li>Classes are public by default</li>
+          <li>Functions are public by default</li>
+          <li>Constructor takes two non-nullable strings</li>
+          <li>Automatic getters for the constructor parameters</li>
+          <li>This is not the way to write a getter in Kotlin!</li> 
+        </ul>
       </section>
 
       <section>
-        <h3>If, When, Expressions</h3>
+        <h3>Interfaces</h3>
         <pre>
           <code class="kotlin">
-            TODO
+    interface Friendly {
+        fun sayHello(): String
+
+        fun isFriendly() = true
+    }
           </code>
         </pre>
-        <p>Functions do not need to be in a class!</p>
+        <p align="left">Notes:</p>
+        <ul>
+          <li>Interfaces are public by default</li>
+          <li>Functions are public by default</li>
+          <li>Methods can be abstract, or can have an implementation (like Java8 Default methods)</li>
+          <li>Methods can be private (like Java9)</li>
+        </ul>
       </section>
-      
+       
+      <section>
+        <h3>Classes</h3>
+        <pre>
+          <code class="kotlin">
+    class MyCalculator2 (val firstName: String, val lastName: String) : Friendly {
+        override fun sayHello(): String {
+            return "Hi!  My name is " + fullName
+        }
+
+        val fullName: String
+            get() = firstName + " " + lastName  // a "getter" in Kotlin
+    }
+          </code>
+        </pre>
+        <p align="left">Notes:</p>
+        <ul style="font-size: smaller">
+          <li>Implements Friendly, overrides sayHello()</li>
+          <li>A more idiomatic Kotlin "getter"</li>
+        </ul>
+      </section>
+
       <section>
         <h3>Data Classes</h3>
         <pre>
@@ -227,6 +272,72 @@
       </section>
       
       <section>
+        <h3>If Expressions</h3>
+        <pre>
+          <code class="kotlin">
+    fun renderGreeting1(friendly: Boolean): String {
+        return if (friendly) {
+            "Hello!"
+        } else {
+            "Go Away!"
+        }
+    }
+    
+    fun renderGreeting2(friendly: Boolean) = if (friendly) "Hello!" else "Go Away!"
+          </code>
+        </pre>
+        <p align="left">Notes</p>
+        <ul style="font-size: smaller">
+          <li>No need to create a variable, or to have multiple return statements</li>
+          <li>Because of this, Kotlin does not have a ternary operator</li>
+        </ul>
+      </section>
+      
+      <section>
+        <h3>When Expressions - A Better Switch</h3>
+        <pre>
+          <code class="kotlin">
+    fun calculateLastName(firstName: String): String {
+        return when(firstName) {
+            "Fred", "Wilma" -> "Flintstone"
+            "Barney", "Betty" -> "Rubble"
+            else -> { // can be a code block
+                return "Unknown"
+            }
+        }
+    }
+
+    fun renderLifeStage1(age: Int): String {
+        return when(age) {
+            in 0..12 -> "Child"
+            in 13..19 -> "Teenager"
+            else -> "Adult"
+        }
+    }
+          </code>
+        </pre>
+      </section>
+      
+      <section>
+        <h3>When Expressions - Alternate Syntax</h3>
+        <pre>
+          <code class="kotlin">
+    fun renderLifeStage2(age: Int): String {
+        return when {
+            age < 13 -> "Child"
+            age in 13..19 -> "Teenager"
+            else -> "Adult"
+        }
+    }
+          </code>
+        </pre>
+        <p align="left">Notes</p>
+        <ul>
+          <li>Any boolean expression is allowed</li>
+        </ul>
+      </section>
+
+      <section>
         <h3>Sealed Classes</h3>
         <pre>
           <code class="kotlin">
@@ -244,7 +355,7 @@
   }
 
   var myDog = Dog("Bob Barker", 22)
-  var talk = speak(myDog)
+  var talk = speak(myDog)   // Bark
           </code>
         </pre>
       </section>
@@ -259,13 +370,14 @@
 
   fun Animal.speak(): String {
       return when (this) {
+          // string template preview!
           is Dog -> "Bark! My name is $name and my number is $akcNumber"
           is Cat -> "Meow! My name is $name and my number is $cfaNumber"
       }
   }
 
   var myDog = Dog("Bob Barker", 22)
-  var talk = myDog.speak()
+  var talk = myDog.speak()  // Bark! My name is Bob Barker and my number is 22
           </code>
         </pre>
       </section>
@@ -290,7 +402,11 @@
   class Person(val name: String, val homeAddress: Address, val workAddress: Address? = null)
 
   val bob = Person(homeAddress = Address("Main Street"), name = "Bob")
+  
+  // nullable
   val bobsWorkAddress1: String? = bob.workAddress?.line2  // type can be inferred
+  
+  // non-nullable - must have a value
   val bobsWorkAddress2: String = bob.workAddress?.line2 ?: "" // type can be inferred
           </code>
         </pre>
@@ -305,7 +421,8 @@
   val bobString1 = "My name is ${bob.name}, my home address is ${bob.homeAddress.line1}"
 
   val bobString2 = """|My name is "${bob.name}"
-                      |  My home address is ${bob.homeAddress.line1}""".trimMargin()
+                      |  My home address is ${bob.homeAddress.line1}"""
+                   .trimMargin("|")   // "|" is default
           </code>
         </pre>
       </section>
@@ -493,12 +610,13 @@
         val names = listOf("Fred", "Wilma", "Barney", "Betty")
 
         var str = names.filter { it.startsWith("B") }
-                .map(getUpperCaser())
+                .map(upperCaseIt())
                 .joinToString(",")
         assertThat(str).isEqualTo("BARNEY,BETTY")
     }
 
-    private fun getUpperCaser(): (String) -> String = { it.toUpperCase() }
+    private fun upperCaseIt(): (String) -> String = { it.toUpperCase() }
+    private fun upperCaseIt2() = { s: String -> s.toUpperCase() }  // using inferred type
           </code>
         </pre>
       </section>
@@ -518,7 +636,7 @@
       <section>
         <h3>DSL Example</h3>
         <pre>
-          <code class="kotlin">
+          <code class="kotlin" style="max-height: 600px">
 fun result(args: Array&lt;String&gt;) =
     html {
         head {
@@ -558,14 +676,15 @@ fun result(args: Array&lt;String&gt;) =
         <ul>
           <li>Install an IDE
             <ul>
-              <li>IntelliJ IDEA (community edition is OK)</li>
-              <li>Eclipse with JetBrains Kotlin Plugin</li>
+              <li>IntelliJ IDEA (community edition is OK) - Best</li>
+              <li>Eclipse with JetBrains Kotlin Plugin - Not Terrible</li>
+              <li>VS Code? No support except syntax highlighting and Maven</li>
             </ul>
           </li>
           <li>Do the Kotlin Koans workshop: https://github.com/Kotlin/kotlin-koans</li>
-          <li>RTFM: https://kotlinlang.org/docs/reference/</li>
+          <li>Docs: https://kotlinlang.org/docs/reference/</li>
           <li>"Kotlin in Action" - decent book</li>
-          <li>Look for seams where Kotlin can fit in to your existing projects</li>
+          <li>Look for seams where Kotlin can fit in to your existing projects (tests are an obvious start)</li>
         </ul>
       </section>
     </div>

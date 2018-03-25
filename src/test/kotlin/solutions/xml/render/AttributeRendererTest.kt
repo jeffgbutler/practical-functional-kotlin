@@ -1,9 +1,7 @@
 package solutions.xml.render
 
 import org.assertj.core.api.Assertions.assertThat
-
 import org.junit.Test
-
 import solutions.xml.model.Attribute
 
 class AttributeRendererTest {
