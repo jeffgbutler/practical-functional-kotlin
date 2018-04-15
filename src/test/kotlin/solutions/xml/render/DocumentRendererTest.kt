@@ -75,11 +75,11 @@ class DocumentRendererTest {
                 Attribute("name", "fred"),
                 TextElement("more text"))
 
-        element = element + subElement
+        element += subElement
 
         val subElement2 = XmlElementWithoutChildren("subElement2")
 
-        element = element + subElement2
+        element += subElement2
 
         val docType = PublicDocType("example.dtd", "-//Example//EN")
 

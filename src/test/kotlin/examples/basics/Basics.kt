@@ -137,6 +137,10 @@ fun deposit(account: BankAccount, amount: Double) {
     account `!&%` 33.0
 }
 
-//fun BankAccount.deposit(amount: Double) {
-//    this += amount
-//}
+fun BankAccount.deposit2(amount: Double) {
+    this += amount
+}
+
+fun getAString(person: Person?): String {
+    return person?.workAddress?.line2?.trim() ?: ""
+}

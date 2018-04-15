@@ -62,11 +62,11 @@ class ElementRendererTest {
         val subElement = XmlElementWithChildren("subElement1", Attribute("name", "fred"),
                 TextElement("more text"))
 
-        element2 = element2 + subElement
+        element2 += subElement
 
         val subElement2 = XmlElementWithoutChildren("subElement2")
 
-        element2 = element2 + subElement2
+        element2 += subElement2
 
         val answer = ElementRenderer().render(element2)
                 .joinToString("\n")

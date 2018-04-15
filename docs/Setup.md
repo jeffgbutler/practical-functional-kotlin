@@ -44,6 +44,7 @@ If you experience difficulties in building the project, it might be that your wo
    - ctrl-shift-P (show all commands)
    - Open Workplace settings
    - Add setting "java.home": "\<your JDK location\>" (for example "C:\\\\Program Files\\\\Java\\\\jdk1.8.0_121")
+   - Add setting "maven.terminal.useJavaHome": true
    - Reload the window (ctrl-shift-P, then "Reload Window")
 9. Specify the location of the Maven executable:
    - ctrl-shift-P (show all commands)

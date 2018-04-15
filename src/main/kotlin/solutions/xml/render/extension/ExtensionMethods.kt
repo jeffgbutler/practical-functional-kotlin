@@ -15,14 +15,12 @@ fun List<Attribute>?.render(): String {
     }
 }
 
-fun DocType?.render(): String {
-    return if (this == null) {
-        ""
-    } else {
-        when (this) {
-            is SystemDocType -> render()
-            is PublicDocType -> render()
-        }
+fun DocType?.render() = if (this == null) {
+    ""
+} else {
+    when (this) {
+        is SystemDocType -> render()
+        is PublicDocType -> render()
     }
 }
 
