@@ -269,8 +269,24 @@
       
       <section>
         <h3>If Expressions</h3>
-        <pre>
-          <code class="kotlin">
+        <div class="left">
+          <p align="center">Java</p>
+          <pre>
+            <code class="java" data-trim>
+    public String renderGreeting(Boolean isFriendly) {
+        if (isFriendly) {
+            return "Hello!";
+        } else {
+            return "Go Away!";
+        }
+    }
+            </code>
+          </pre>
+        </div>
+        <div class="right">
+          <p align="center">Kotlin</p>
+          <pre>
+            <code class="kotlin" data-trim>
     fun renderGreeting1(friendly: Boolean): String {
         return if (friendly) {
             "Hello!"
@@ -279,9 +295,11 @@
         }
     }
     
-    fun renderGreeting2(friendly: Boolean) = if (friendly) "Hello!" else "Go Away!"
-          </code>
-        </pre>
+    fun renderGreeting2(friendly: Boolean) =
+      if (friendly) "Hello!" else "Go Away!"
+            </code>
+          </pre>
+        </div>
         <p align="left">Notes</p>
         <ul style="font-size: smaller">
           <li>No need to create a variable, or to have multiple return statements</li>
@@ -291,8 +309,37 @@
       
       <section>
         <h3>When Expressions - A Better Switch</h3>
-        <pre>
-          <code class="kotlin">
+        <div class="left">
+          <p align="center">Java</p>
+          <pre>
+            <code class="Java" data-trim style="max-height: 450px">
+    public String calculateLastName(String firstName) {
+      String rc;
+      
+      switch(firstName) {
+      case "Fred":
+      case "Wilma":
+        rc = "Flintstone";
+        break;
+        
+      case "Barney":
+      case "Betty":
+        rc = "Rubble";
+        break;
+      
+      default:
+        rc = "Unknown";
+        break;
+      }
+      return rc;
+    }
+            </code>
+          </pre>
+        </div>
+        <div class="right">
+          <p align="center">Kotlin</p>
+          <pre>
+            <code class="kotlin" data-trim>
     fun calculateLastName(firstName: String): String {
         return when(firstName) {
             "Fred", "Wilma" -> "Flintstone"
@@ -310,8 +357,9 @@
             else -> "Adult"
         }
     }
-          </code>
-        </pre>
+            </code>
+          </pre>
+        </div>
       </section>
       
       <section>
@@ -327,14 +375,12 @@
     }
           </code>
         </pre>
-        <p align="left">Notes</p>
-        <ul>
-          <li>Any boolean expression is allowed</li>
-        </ul>
+        <p align="left">Note: Any boolean expression is allowed</p>
       </section>
 
       <section>
         <h3>Sealed Classes</h3>
+        <p>Sealed classes create a fixed hierarchy</p>
         <pre>
           <code class="kotlin">
   // all sealed classes must be in the same file...
@@ -354,6 +400,7 @@
   var talk = speak(myDog)   // Bark
           </code>
         </pre>
+        <p>Avoids an ugly instanceof check</p>
       </section>
       
       <section>
@@ -364,6 +411,7 @@
   class Dog(name: String, val akcNumber: Int) : Animal(name)
   class Cat(name: String, val cfaNumber: Int) : Animal(name)
 
+  // add an extension method to Animal
   fun Animal.speak(): String {
       return when (this) {
           // string template preview!
@@ -374,18 +422,6 @@
 
   var myDog = Dog("Bob Barker", 22)
   var talk = myDog.speak()  // Bark! My name is Bob Barker and my number is 22
-          </code>
-        </pre>
-      </section>
-      
-      <section>
-        <h3>Singleton Support</h3>
-        <pre>
-          <code class="kotlin">
-  object FearlessLeader {
-      val firstName = "Gregg"
-      val lastName = "Gallant"
-  }
           </code>
         </pre>
       </section>
@@ -691,6 +727,7 @@ fun result(args: Array&lt;String&gt;) =
   <script src="reveal.js-3.6.0/js/reveal.js"></script>
   <script>
     Reveal.initialize({
+        width: '90%',
         slideNumber: 'c/t',
         dependencies: [
             // Cross-browser shim that fully implements classList - https://github.com/eligrey/classList.js/
