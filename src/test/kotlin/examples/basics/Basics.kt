@@ -144,3 +144,9 @@ fun BankAccount.deposit2(amount: Double) {
 fun getAString(person: Person?): String {
     return person?.workAddress?.line2?.trim() ?: ""
 }
+
+fun `👍`() = println("Fred")
+
+fun tryIt() {
+    `👍`()
+}

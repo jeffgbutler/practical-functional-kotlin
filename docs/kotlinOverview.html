@@ -12,18 +12,29 @@
     <div class="slides">
 
       <section>
-        <h2>Practical Functional Kotlin</h2>
-        <h3>Kotlin Overview</h3>
+        <h2>Intro to Kotlin</h2>
         <h4>Jeff Butler</h4>
         <p>https://github.com/jeffgbutler/practical-functional-kotlin</p>
         <p>https://jeffgbutler.github.io/practical-functional-kotlin/</p>
       </section>
 
       <section>
+        <h2>About Me</h2>
+        <ul>
+          <li>Enterprise Architect for DMI in Indianapolis</li>
+          <li>Committer to Apache iBatis/MyBatis since 2005</li>
+          <li>Creator of MyBatis Generator and MyBatis Dynamic SQL</li>
+          <li>Voracious reader, adventurous eater, lawn care enthusiast</li>
+        </ul>
+      </section>
+
+      <section>
         <h3>My Dilemma</h3>
-        <p>How do I teach a new programming language in an hour?</p>
-        <p>Answer - I don't</p>
-        <p>This talk is a little bit about why I think Kotlin is important, and then we'll do a whirl wind tour of some code</p> 
+        <ul>
+          <li>How do I teach a new programming language in an hour?</li>
+          <li>Answer - I don't</li>
+          <li>This talk is a little bit about why I think Kotlin is important, and then we'll do a whirl wind tour of some code</li> 
+        </ul>
       </section>
       
       <section>
@@ -147,7 +158,7 @@
           <li>Type inference</li>
           <li>Lambdas before Java 8</li>
           <li>Null Safety</li>
-          <li>Pimp my library</li>
+          <li>Extension Functions</li>
           <li>DSL Construction</li>
         </ul>
       </section>
@@ -174,10 +185,10 @@
         <pre>
           <code class="kotlin">
     fun helloWorld1(s: String): Unit {  // Unit is like void, and not necessary in this case
-        println(s)
+        println("Hello World!")
     }
 
-    fun helloWorld2(s: String) = println(s)  // one line functions don't need braces
+    fun helloWorld2(s: String) = println("Hello World!")  // one line functions don't need braces
 
     fun add1(a: Int, b: Int): Int {
         return a + b
@@ -194,7 +205,7 @@
         <pre>
           <code class="kotlin">
     class MyCalculator1 (val firstName: String, val lastName: String) {
-        fun getFullName() = firstName + " " + lastName  // don't do this!
+        fun sayHello() = "Hello!"
     }
           </code>
         </pre>
@@ -204,7 +215,6 @@
           <li>Functions are public by default</li>
           <li>Constructor takes two non-nullable strings</li>
           <li>Automatic getters for the constructor parameters</li>
-          <li>This is not the way to write a getter in Kotlin!</li> 
         </ul>
       </section>
 
@@ -245,7 +255,6 @@
         <p align="left">Notes:</p>
         <ul style="font-size: smaller">
           <li>Implements Friendly, overrides sayHello()</li>
-          <li>A more idiomatic Kotlin "getter"</li>
         </ul>
       </section>
 
@@ -404,6 +413,38 @@
       </section>
       
       <section>
+        <h2>Kotlin Extension Functions</h2>
+        <p>Same outcome as visitor, but far simpler to understand</p>
+        <div class="left">
+          <pre>
+            <code class="kotlin" data-trim data-noescape>
+data class Attribute (val name: String, val value: String)
+
+// declare a "render" extension function
+// extension functions can be in different packages,
+// different JARs, different projects
+fun Attribute.render(): String {
+    // extension methods have access non-private
+    // attributes and methods
+
+    // this is a Kotlin string template
+    return """$name="$value" """
+}
+            </code>
+          </pre>
+        </div>
+        <div class="right">
+          <pre>
+            <code class="kotlin" data-trim>
+val att = Attribute("foo", "bar")
+
+val renderedString = att.render() // foo="bar"
+            </code>
+          </pre>
+        </div>
+      </section>
+
+      <section>
         <h3>Extension Functions and Smart Casting</h3>
         <pre>
           <code class="kotlin">
@@ -427,23 +468,80 @@
       </section>
       
       <section>
-        <h3>Named Parameters, Default Parameters, Safe Navigation, Elvis</h3>
-        <pre>
-          <code class="kotlin">
-  class Address(val line1: String, val line2: String? = null)
-  class Person(val name: String, val homeAddress: Address, val workAddress: Address? = null)
+        <h2>Null Safety in Java</h2>
+        <p>Every Java reference can be null.  This requires a lot of null checking or Optional wrapping.</p>
+        <div class="left">
+          <pre>
+            <code class="java" data-trim>
+  public class Person {
+    private Address mailingAddress;
+    public Address getMailingAddress() {
+      return mailingAddress;
+    }
+  }
 
-  val bob = Person(homeAddress = Address("Main Street"), name = "Bob")
+  public class Address {
+    private String secondAddresLine;
+    public String getSecondAddressLine() {
+      return secondAddresLine;
+    }
+  }
+            </code>
+          </pre>
+        </div>
+        <div class="right">
+          <pre>
+            <code class="java" data-trim>
+  public String getSecondMailingAddress(Person person) {
+    if (person == null) {
+      return "";
+    }
+    
+    if (person.getMailingAddress() == null) {
+      return "";
+    }
+    
+    if (person.getMailingAddress().getSecondAddressLine()
+        == null) {
+      return "";
+    }
+    
+    return person.getMailingAddress().getSecondAddressLine()
+      .trim();
+  }
   
-  // nullable
-  val bobsWorkAddress1: String? = bob.workAddress?.line2  // type can be inferred
-  
-  // non-nullable - must have a value
-  val bobsWorkAddress2: String = bob.workAddress?.line2 ?: "" // type can be inferred
-          </code>
-        </pre>
+            </code>
+          </pre>
+        </div>
       </section>
-      
+
+      <section>
+        <h2>Null Safety in Kotlin</h2>
+        <p>Kotlin references can only be null if specifically declared to allow null</p>
+        <div class="left">
+          <pre>
+            <code class="kotlin" data-trim>
+  data class Person (val mailingAddress: Address?)
+
+  data class Address (val secondAddressLine: String?)
+            </code>
+          </pre>
+        </div>
+        <div class="right">
+          <pre>
+            <code class="kotlin" data-trim>
+  String getSecondMailingAddress(person: Person?) =
+    person?.mailingAddress?.secondAddressLine?.trim() ?: ""
+            </code>
+          </pre>
+        </div>
+        <ul>
+          <li>Declare a null capable type with a following ?</li>
+          <li>The <mark>?.</mark> operator is null safe navigation</li>
+          <li>The <mark>?:</mark> operator (Elvis) is null coalescing</li>
+        </ul>
+      </section>
+
       <section>
         <h3>String Templates</h3>
         <pre>
@@ -648,6 +746,8 @@
         assertThat(str).isEqualTo("BARNEY,BETTY")
     }
 
+    // return a function that takes a String and returns a String
+    // "(String) -> String" is the return type
     private fun upperCaseIt(): (String) -> String = { it.toUpperCase() }
     private fun upperCaseIt2() = { s: String -> s.toUpperCase() }  // using inferred type
           </code>
